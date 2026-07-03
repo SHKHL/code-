@@ -12,19 +12,11 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;min-height:100vh;}
 .wrap{max-width:960px;margin:0 auto;padding:20px 16px 60px;}
-
-/* HEADER */
 header{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:20px;}
 .logo{font-size:20px;font-weight:800;letter-spacing:-0.02em;}
 .logo span{color:var(--teal);}
 .tag{font-size:11px;color:#6b6458;letter-spacing:.06em;}
-
-/* STATE BADGE */
-.state-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;
-  margin-bottom:18px;
-}
+.state-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:18px;}
 .state-badge.standby{background:#e8f4f2;color:var(--teal);}
 .state-badge.lang{background:#fff3e0;color:#b36a00;}
 .state-badge.speaking{background:#e3f2fd;color:#1565c0;}
@@ -33,99 +25,77 @@ header{display:flex;align-items:baseline;justify-content:space-between;border-bo
 .state-badge.done{background:#e8f5e9;color:var(--green);}
 .dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:blink 1.2s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.screen{display:none;} .screen.active{display:block;}
 
-/* SCREENS */
-.screen{display:none;}
-.screen.active{display:block;}
-
-/* STANDBY SCREEN */
-.standby-center{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:340px;text-align:center;gap:20px;
-}
-.mic-ring{
-  width:120px;height:120px;border-radius:50%;
-  background:var(--teal);display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 0 0 rgba(14,110,99,.4);
-  animation:ripple 2s ease-in-out infinite;
-  cursor: pointer;
-}
-.mic-ring.listening-pulse{
-  background:var(--red);
-  box-shadow:0 0 0 0 rgba(192,57,43,.4);
-  animation:ripple-red 1s ease-in-out infinite;
-}
+/* STANDBY */
+.standby-center{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:340px;text-align:center;gap:20px;}
+.mic-ring{width:120px;height:120px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:ripple 2s ease-in-out infinite;}
+.mic-ring.listening-pulse{background:var(--red);animation:ripple-red 1s ease-in-out infinite;}
 .mic-ring svg{width:48px;height:48px;fill:#fff;}
 @keyframes ripple{0%{box-shadow:0 0 0 0 rgba(14,110,99,.4);}70%{box-shadow:0 0 0 20px rgba(14,110,99,0);}100%{box-shadow:0 0 0 0 rgba(14,110,99,0);}}
 @keyframes ripple-red{0%{box-shadow:0 0 0 0 rgba(192,57,43,.5);}70%{box-shadow:0 0 0 24px rgba(192,57,43,0);}100%{box-shadow:0 0 0 0 rgba(192,57,43,0);}}
-.standby-title{font-size:28px;font-weight:700;color:var(--ink);}
-.standby-hint{font-size:15px;color:#6b6458;max-width:320px;}
+.standby-title{font-size:28px;font-weight:700;}
+.standby-hint{font-size:15px;color:#6b6458;max-width:340px;}
 
-/* LANG SCREEN */
-.lang-center{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:280px;text-align:center;gap:16px;
-}
-.lang-question{font-size:22px;font-weight:700;margin-bottom:8px;}
-.lang-options{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:15px;}
-.lang-chip{
-  padding:12px 24px;border-radius:24px;
-  border:2px solid var(--line);background:var(--card);
-  font-size:16px;font-weight:600;color:var(--ink);
-  transition:all .2s;
-  cursor: pointer;
-}
-.lang-chip:hover{border-color:var(--teal);background:#f4f9f8;}
-.lang-chip.active{border-color:var(--teal);background:#e8f4f2;color:var(--teal);box-shadow: 0 2px 8px rgba(14,110,99,0.15);}
+/* LANG */
+.lang-center{display:flex;flex-direction:column;align-items:center;min-height:280px;text-align:center;gap:14px;padding-top:20px;}
+.lang-question{font-size:22px;font-weight:700;}
+.lang-options{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:10px;}
+.lang-chip{padding:12px 24px;border-radius:24px;border:2px solid var(--line);background:var(--card);font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;}
+.lang-chip:hover,.lang-chip.active{border-color:var(--teal);background:#e8f4f2;color:var(--teal);box-shadow:0 2px 8px rgba(14,110,99,.15);}
+.status-line{font-size:13px;color:#8a8275;min-height:20px;}
 
-/* QA SCREEN */
+/* QA */
 .qa-grid{display:grid;grid-template-columns:1fr 280px;gap:16px;}
 @media(max-width:680px){.qa-grid{grid-template-columns:1fr;}}
-.qa-left{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;}
-.qa-right{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;}
-
+.qa-left,.qa-right{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;}
 .progress-bar-bg{height:4px;background:#e0dbd0;border-radius:2px;margin-bottom:6px;}
 .progress-bar{height:4px;background:var(--teal);border-radius:2px;transition:width .5s;}
 .progress-label{font-size:12px;color:#8a8275;margin-bottom:14px;}
 
-.q-step{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
-.q-chinese{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px;padding-left:4px;border-left:4px solid var(--teal);}
-.q-foreign{font-size:16px;font-weight:500;color:#555;margin-bottom:6px;line-height:1.4;font-style: italic;}
-.q-hint-tag{display:inline-block;background:#e8f4f2;color:var(--teal-deep);font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:16px;}
+/* ── 患者螢幕顯示模式（無語音時放大） */
+.q-patient-display{
+  background:#1c2b2d;color:#fff;border-radius:12px;
+  padding:20px;text-align:center;margin-bottom:14px;
+  font-size:22px;font-weight:700;line-height:1.5;
+  display:none;
+}
+.q-patient-display.show{display:block;}
 
+.q-step{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.q-chinese{font-size:18px;font-weight:700;border-left:4px solid var(--teal);padding-left:8px;margin-bottom:6px;}
+.q-foreign{font-size:15px;color:#555;margin-bottom:6px;font-style:italic;}
+.q-hint-tag{display:inline-block;background:#e8f4f2;color:var(--teal-deep);font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:14px;}
 .box-label{font-size:11px;font-weight:700;color:#8a8275;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
 .patient-box{background:#f9f7f2;border:1px solid var(--line);border-radius:8px;padding:12px;min-height:50px;font-size:14px;margin-bottom:10px;color:#4a4438;}
-.translation-box{background:#e8f4f2;border:1px solid #b8dcd7;border-radius:8px;padding:12px;min-height:50px;font-size:14px;color:var(--ink);font-weight:500;margin-bottom:10px;}
-
-.conf-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.translation-box{background:#e8f4f2;border:1px solid #b8dcd7;border-radius:8px;padding:12px;min-height:50px;font-size:14px;font-weight:500;margin-bottom:10px;}
+.conf-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
 .conf-bg{flex:1;height:5px;background:#e0dbd0;border-radius:3px;}
 .conf-fill{height:5px;border-radius:3px;background:var(--teal);width:0%;transition:width .3s;}
 .conf-val{font-size:12px;color:#8a8275;min-width:36px;text-align:right;}
+.qa-status{font-size:13px;color:#8a8275;min-height:20px;margin-bottom:8px;}
+.qa-controls{display:flex;gap:8px;margin-bottom:12px;}
+.btn-sm{padding:7px 14px;font-size:12px;font-weight:600;border-radius:6px;cursor:pointer;border:1px solid var(--line);background:#fff;transition:all .15s;}
+.btn-sm.retry{color:var(--amber);border-color:var(--amber);}
+.btn-sm.retry:hover{background:#fff8ec;}
+.btn-sm.skip{color:#888;}
+.btn-sm.skip:hover{background:#f5f2eb;}
+.listen-indicator{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:#fce4ec;color:var(--red);font-size:14px;font-weight:600;margin-bottom:10px;display:none;}
+.listen-indicator.show{display:flex;}
+.listen-indicator svg{width:18px;height:18px;fill:var(--red);animation:mpulse 1s ease-in-out infinite;}
+@keyframes mpulse{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
 
-.status-line{font-size:13px;color:#8a8275;min-height:20px;margin-bottom:10px;}
-
-/* QA Manual Controls */
-.qa-controls{display:flex;gap:10px;margin-top:10px;margin-bottom:15px;}
-.btn-small{padding:6px 12px;font-size:12px;font-weight:600;border-radius:4px;cursor:pointer;border:1px solid var(--line);background:#fff;}
-.btn-small.retry-btn{color:var(--amber);border-color:var(--amber);}
-.btn-small.skip-btn{color:#777;}
-
-/* Listening indicator in QA */
-.listen-indicator{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;border-radius:8px;background:#fce4ec;
-  color:var(--red);font-size:14px;font-weight:600;margin-bottom:10px;
-}
-.listen-indicator svg{width:18px;height:18px;fill:var(--red);animation:mic-pulse 1s ease-in-out infinite;}
-@keyframes mic-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
-
-/* Table */
+/* TABLE */
 .table-title{font-size:11px;font-weight:700;color:var(--teal-deep);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 td{padding:7px 4px;vertical-align:top;border-bottom:1px solid #ece8dc;}
 td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:nowrap;}
 .cell-filled{background:#e8f4f2;}
 .cell-empty{color:#c0b9ad;font-style:italic;}
+
+/* VOICE WARN */
+.voice-warn{background:#fff8ec;border:1px solid #f5c842;border-radius:8px;padding:10px 14px;font-size:13px;color:#7a5200;margin-bottom:14px;display:none;}
+.voice-warn.show{display:block;}
 
 /* DONE */
 .done-banner{background:var(--teal);color:#fff;border-radius:12px;padding:22px;text-align:center;margin-bottom:18px;}
@@ -134,13 +104,9 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
 .done-grid{display:grid;grid-template-columns:1fr 280px;gap:16px;}
 @media(max-width:680px){.done-grid{grid-template-columns:1fr;}}
 .done-panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;}
-
-.action-btns{display:flex;gap:12px;margin-top:16px;}
-.restart-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--ink);border:1px solid var(--line);padding:12px 22px;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;}
-.speak-report-btn{display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:#fff;border:none;padding:12px 22px;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;flex:1;justify-content:center;}
-.speak-report-btn:hover{background:#bd751e;}
-.restart-btn:hover{background:#f5f2eb;}
-
+.action-btns{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;}
+.primary-btn{display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:#fff;border:none;padding:12px 22px;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;flex:1;justify-content:center;}
+.secondary-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--ink);border:1px solid var(--line);padding:12px 22px;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;}
 .error-box{background:#fce4ec;border:1px solid #f48fb1;border-radius:10px;padding:18px;color:var(--red);font-size:14px;margin-top:16px;}
 .disclaimer{margin-top:28px;font-size:12px;color:#9a9384;border-top:1px solid var(--line);padding-top:12px;}
 </style>
@@ -154,58 +120,60 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
 
   <div id="stateBadge" class="state-badge standby"><span class="dot"></span><span id="stateText">待機中</span></div>
 
-  <!-- ─── STANDBY ─── -->
+  <!-- STANDBY -->
   <div id="screenStandby" class="screen active">
     <div class="standby-center">
-      <div class="mic-ring" id="standbyRing" onclick="startSystemHand()">
+      <div class="mic-ring" id="standbyRing" onclick="handleStartClick()">
         <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v7a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v7a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm-7 9h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 0 1 5 12z"/></svg>
       </div>
       <div class="standby-title">救譯 Joy 待機中</div>
-      <div class="standby-hint" id="standbyHint">點擊上方麥克風或對著手機說「抵達現場」啟動系統</div>
+      <div class="standby-hint" id="standbyHint">點擊上方麥克風，或說「抵達現場」來啟動系統</div>
     </div>
     <div id="errorBox" class="error-box" style="display:none;"></div>
   </div>
 
-  <!-- ─── LANG SELECT ─── -->
+  <!-- LANG -->
   <div id="screenLang" class="screen">
     <div class="lang-center">
       <div class="lang-question">請問患者說哪種語言？</div>
-      <div class="standby-hint" style="color: var(--teal-deep); font-weight: 600;">（可隨時點選下方按鈕直接切換與更正）</div>
+      <div class="standby-hint">說出語言名稱，或直接點選</div>
       <div class="lang-options">
-        <div class="lang-chip" id="chip-id" onclick="selectLanguageHand('id-ID')">🇮🇩 印尼語<br><span style="font-size:11px; font-weight:normal; opacity:0.8;">Bahasa Indonesia</span></div>
-        <div class="lang-chip" id="chip-vi" onclick="selectLanguageHand('vi-VN')">🇻🇳 越南語<br><span style="font-size:11px; font-weight:normal; opacity:0.8;">Tiếng Việt</span></div>
-        <div class="lang-chip" id="chip-th" onclick="selectLanguageHand('th-TH')">🇹🇭 泰語<br><span style="font-size:11px; font-weight:normal; opacity:0.8;">ภาษาไทย</span></div>
-        <div class="lang-chip" id="chip-ph" onclick="selectLanguageHand('fil-PH')">🇵🇭 菲律賓語<br><span style="font-size:11px; font-weight:normal; opacity:0.8;">Wikang Tagalog</span></div>
+        <div class="lang-chip" id="chip-id" onclick="selectLangClick('id-ID')">🇮🇩 印尼語<br><span style="font-size:11px;opacity:.7;font-weight:normal;">Bahasa Indonesia</span></div>
+        <div class="lang-chip" id="chip-vi" onclick="selectLangClick('vi-VN')">🇻🇳 越南語<br><span style="font-size:11px;opacity:.7;font-weight:normal;">Tiếng Việt</span></div>
+        <div class="lang-chip" id="chip-th" onclick="selectLangClick('th-TH')">🇹🇭 泰語<br><span style="font-size:11px;opacity:.7;font-weight:normal;">ภาษาไทย</span></div>
+        <div class="lang-chip" id="chip-ph" onclick="selectLangClick('fil-PH')">🇵🇭 菲律賓語<br><span style="font-size:11px;opacity:.7;font-weight:normal;">Wikang Tagalog</span></div>
       </div>
-      <div class="status-line" id="langStatus" style="margin-top: 15px; font-weight: bold;">系統正在詢問語言…</div>
+      <div class="status-line" id="langStatus" style="margin-top:12px;">聆聽中，請說語言名稱…</div>
     </div>
   </div>
 
-  <!-- ─── Q&A ─── -->
+  <!-- QA -->
   <div id="screenQA" class="screen">
     <div class="progress-bar-bg"><div class="progress-bar" id="progBar" style="width:0%"></div></div>
     <div class="progress-label" id="progLabel">問題 1 / 8</div>
 
+    <!-- 無語音時的患者大字顯示 -->
+    <div class="q-patient-display" id="patientDisplay"></div>
+    <div class="voice-warn" id="voiceWarn">⚠ 此裝置未安裝患者語言語音包，問題文字顯示於上方黑框，請將螢幕轉向患者閱讀。中文翻譯仍會語音播報給 EMT。</div>
+
     <div class="qa-grid">
       <div class="qa-left">
         <div class="q-step" id="qStep">問題 1</div>
-        <!-- EMT 專用中文對照 -->
-        <div class="q-chinese" id="qChinese">中文問題載入中…</div>
-        <!-- 患者看/聽的外語題目 -->
+        <div class="q-chinese" id="qChinese">—</div>
         <div class="q-foreign" id="qForeign">—</div>
         <div class="q-hint-tag" id="qHint">—</div>
 
-        <div id="listenIndicator" class="listen-indicator" style="display:none;">
+        <div class="listen-indicator" id="listenIndicator">
           <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v7a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v7a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm-7 9h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 0 1 5 12z"/></svg>
           聆聽患者中…
         </div>
 
         <div class="box-label">患者說（原文辨識）</div>
-        <div class="patient-box" id="patientRaw">等待問診啟動…</div>
+        <div class="patient-box" id="patientRaw">等待啟動…</div>
 
         <div class="qa-controls">
-          <button class="btn-small retry-btn" onclick="triggerManualRetry()">🔄 重新收音</button>
-          <button class="btn-small skip-btn" onclick="triggerManualSkip()">⏭️ 跳過此題</button>
+          <button class="btn-sm retry" onclick="manualAction('retry')">🔄 重新收音</button>
+          <button class="btn-sm skip" onclick="manualAction('skip')">⏭ 跳過此題</button>
         </div>
 
         <div class="conf-row">
@@ -214,10 +182,10 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
           <span class="conf-val" id="confVal">—</span>
         </div>
 
-        <div class="box-label">AI 翻譯（中文）— 同步語音播放給 EMT</div>
+        <div class="box-label">AI 翻譯（中文）— 同步語音播放</div>
         <div class="translation-box" id="translationBox">—</div>
 
-        <div class="status-line" id="qaStatus">—</div>
+        <div class="qa-status" id="qaStatus">—</div>
       </div>
 
       <div class="qa-right">
@@ -236,12 +204,9 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
     </div>
   </div>
 
-  <!-- ─── DONE ─── -->
+  <!-- DONE -->
   <div id="screenDone" class="screen">
-    <div class="done-banner">
-      <h2>✓ 問診完成</h2>
-      <p>以下為本次評估摘要，可截圖交給急診醫護</p>
-    </div>
+    <div class="done-banner"><h2>✓ 問診完成</h2><p>以下為本次評估摘要，可截圖交給急診醫護</p></div>
     <div class="done-grid">
       <div class="done-panel">
         <div class="table-title">完整問答紀錄</div>
@@ -253,8 +218,8 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
       </div>
     </div>
     <div class="action-btns">
-      <button class="speak-report-btn" onclick="speakFinalReport()">🔊 語音朗讀最終結論 (中文)</button>
-      <button class="restart-btn" onclick="location.reload()">↺ 重新開始</button>
+      <button class="primary-btn" onclick="speakReport()">🔊 語音朗讀結論摘要</button>
+      <button class="secondary-btn" onclick="location.reload()">↺ 重新開始</button>
     </div>
   </div>
 
@@ -262,305 +227,391 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
 </div>
 
 <script>
+// ═══════════════════════════════════════════════════════
+// 語言資料
+// ═══════════════════════════════════════════════════════
 const LANG_DATA = {
   'id-ID': {
     name:'印尼語', chipId:'chip-id',
-    greeting:'Halo, saya petugas medis darurat. Saya akan membantu Anda. Tolong jawab pertanyaan saya dengan singkat.',
-    retry:'Maaf, saya tidak mendengar. Tolong ulangi.',
+    greeting:'Halo, saya petugas medis darurat. Saya akan membantu Anda. Tolong jawab pertanyaan saya.',
+    retry:'Maaf, tidak terdengar. Tolong ulangi.',
     questions:[
-      {text:'Di mana Anda merasa sakit atau tidak nyaman?',       field:'S', hint:'症狀/部位', chText:'您哪裡感到疼痛或不舒服？'},
-      {text:'Sudah berapa lama Anda merasakan ini?',              field:'O', hint:'發作時間', chText:'這個狀況已經持續多久了？'},
-      {text:'Bagaimana rasa sakitnya? Seperti ditusuk atau terbakar?', field:'Q', hint:'疼痛性質', chText:'痛的感覺是怎麼樣？像針刺還是火燒？'},
-      {text:'Apakah Anda alergi terhadap obat atau makanan?',    field:'A', hint:'過敏史', chText:'您對什麼藥物或食物過敏嗎？'},
-      {text:'Apakah Anda sedang mengonsumsi obat-obatan?',       field:'M', hint:'目前用藥', chText:'您目前有定期服用什麼藥物嗎？'},
-      {text:'Apakah Anda memiliki riwayat penyakit sebelumnya?', field:'P', hint:'過往病史', chText:'您過去有什麼疾病病史嗎？'},
-      {text:'Kapan terakhir kali Anda makan atau minum?',        field:'L', hint:'最後進食', chText:'您最後一次吃東西或喝水是什麼時候？'},
-      {text:'Bagaimana kejadian ini bisa terjadi?',              field:'E', hint:'事發經過', chText:'剛剛發生了什麼事？（事發經過）'},
+      {text:'Di mana Anda merasa sakit atau tidak nyaman?',            field:'S', hint:'症狀/部位',  ch:'您哪裡感到疼痛或不舒服？'},
+      {text:'Sudah berapa lama Anda merasakan ini?',                   field:'O', hint:'發作時間',  ch:'這個狀況已持續多久？'},
+      {text:'Bagaimana rasa sakitnya? Seperti ditusuk atau terbakar?', field:'Q', hint:'疼痛性質',  ch:'痛的感覺？像針刺還是火燒？'},
+      {text:'Apakah Anda alergi terhadap obat atau makanan?',          field:'A', hint:'過敏史',    ch:'您對什麼藥物或食物過敏嗎？'},
+      {text:'Apakah Anda sedang mengonsumsi obat-obatan?',             field:'M', hint:'目前用藥',  ch:'您目前有定期服用藥物嗎？'},
+      {text:'Apakah Anda memiliki riwayat penyakit sebelumnya?',       field:'P', hint:'過往病史',  ch:'您有過去疾病病史嗎？'},
+      {text:'Kapan terakhir kali Anda makan atau minum?',              field:'L', hint:'最後進食',  ch:'最後一次吃東西或喝水是何時？'},
+      {text:'Bagaimana kejadian ini bisa terjadi?',                    field:'E', hint:'事發經過',  ch:'發生了什麼事？'},
     ]
   },
   'vi-VN': {
     name:'越南語', chipId:'chip-vi',
-    greeting:'Xin chào, tôi là nhân viên y tế cấp cứu. Vui lòng trả lời ngắn gọn các câu hỏi của tôi.',
-    retry:'Xin lỗi, tôi không nghe thấy. Vui lòng nói lại.',
+    greeting:'Xin chào, tôi là nhân viên y tế cấp cứu. Vui lòng trả lời ngắn gọn.',
+    retry:'Xin lỗi, không nghe thấy. Vui lòng nói lại.',
     questions:[
-      {text:'Bạn đang đau hoặc khó chịu ở đâu?',                field:'S', hint:'症狀/部位', chText:'您哪裡感到疼痛或不舒服？'},
-      {text:'Tình trạng này đã xảy ra bao lâu rồi?',             field:'O', hint:'發作時間', chText:'這個狀況已經持續多久了？'},
-      {text:'Cơn đau như thế nào? Như kim châm hay nóng rát?',   field:'Q', hint:'疼痛性質', chText:'痛的感覺是怎麼樣？像針刺還是火燒？'},
-      {text:'Bạn có dị ứng với thuốc hoặc thực phẩm nào không?',field:'A', hint:'過敏史', chText:'您對什麼藥物或食物過敏嗎？'},
-      {text:'Bạn có đang dùng thuốc gì không?',                  field:'M', hint:'目前用藥', chText:'您目前有定期服用什麼藥物嗎？'},
-      {text:'Bạn có tiền sử bệnh lý nào không?',                 field:'P', hint:'過往病史', chText:'您過去有什麼疾病病史嗎？'},
-      {text:'Lần cuối bạn ăn uống là khi nào?',                  field:'L', hint:'最後進食', chText:'您最後一次吃東西或喝水是什麼時候？'},
-      {text:'Chuyện gì đã xảy ra với bạn?',                      field:'E', hint:'事發經過', chText:'剛剛發生了什麼事？（事發經過）'},
+      {text:'Bạn đang đau hoặc khó chịu ở đâu?',                field:'S', hint:'症狀/部位', ch:'您哪裡感到疼痛或不舒服？'},
+      {text:'Tình trạng này đã xảy ra bao lâu rồi?',             field:'O', hint:'發作時間', ch:'這個狀況已持續多久？'},
+      {text:'Cơn đau như thế nào? Như kim châm hay nóng rát?',   field:'Q', hint:'疼痛性質', ch:'痛的感覺？像針刺還是火燒？'},
+      {text:'Bạn có dị ứng với thuốc hoặc thực phẩm không?',     field:'A', hint:'過敏史',   ch:'您對什麼藥物或食物過敏嗎？'},
+      {text:'Bạn có đang dùng thuốc gì không?',                  field:'M', hint:'目前用藥', ch:'您目前有定期服用藥物嗎？'},
+      {text:'Bạn có tiền sử bệnh lý nào không?',                 field:'P', hint:'過往病史', ch:'您有過去疾病病史嗎？'},
+      {text:'Lần cuối bạn ăn uống là khi nào?',                  field:'L', hint:'最後進食', ch:'最後一次吃東西或喝水是何時？'},
+      {text:'Chuyện gì đã xảy ra với bạn?',                      field:'E', hint:'事發經過', ch:'發生了什麼事？'},
     ]
   },
   'th-TH': {
     name:'泰語', chipId:'chip-th',
-    greeting:'สวัสดี ฉันเป็นเจ้าหน้าที่กู้ภัยฉุกเฉิน กรุณาตอบคำถามสั้นๆ ของฉัน',
-    retry:'ขอโทษ ฉันไม่ได้ยิน กรุณาพูดซ้ำอีกครั้ง',
+    greeting:'สวัสดี ฉันเป็นเจ้าหน้าที่กู้ภัยฉุกเฉิน กรุณาตอบคำถามสั้นๆ',
+    retry:'ขอโทษ ฉันไม่ได้ยิน กรุณาพูดซ้ำ',
     questions:[
-      {text:'คุณรู้สึกเจ็บปวดหรือไม่สบายที่ไหน?',              field:'S', hint:'症狀/部位', chText:'您哪裡感到疼痛或不舒服？'},
-      {text:'อาการนี้เป็นมานานแค่ไหนแล้ว?',                     field:'O', hint:'發作時間', chText:'這個狀況已經持續多久了？'},
-      {text:'ความเจ็บปวดเป็นอย่างไร? แสบร้อนหรือบีบ?',          field:'Q', hint:'疼痛性質', chText:'痛的感覺是怎麼樣？像針刺還是火燒？'},
-      {text:'คุณแพ้ยาหรืออาหารอะไรบ้างไหม?',                    field:'A', hint:'過敏史', chText:'您對什麼藥物或食物過敏嗎？'},
-      {text:'ตอนนี้คุณกินยาอะไรอยู่บ้างไหม?',                   field:'M', hint:'目前用藥', chText:'您目前有定期服用什麼藥物嗎？'},
-      {text:'คุณมีประวัติโรคประจำตัวไหม?',                       field:'P', hint:'過往病史', chText:'您過去有什麼疾病病史嗎？'},
-      {text:'คุณกินอาหารหรือดื่มน้ำครั้งสุดท้ายเมื่อไหร่?',     field:'L', hint:'最後進食', chText:'您最後一次吃東西或喝水是什麼時候？'},
-      {text:'เกิดอะไรขึ้นกับคุณ?',                               field:'E', hint:'事發經過', chText:'剛剛發生了什麼事？（事發經過）'},
+      {text:'คุณรู้สึกเจ็บปวดหรือไม่สบายที่ไหน?',           field:'S', hint:'症狀/部位', ch:'您哪裡感到疼痛或不舒服？'},
+      {text:'อาการนี้เป็นมานานแค่ไหนแล้ว?',                  field:'O', hint:'發作時間', ch:'這個狀況已持續多久？'},
+      {text:'ความเจ็บปวดเป็นอย่างไร? แสบร้อนหรือบีบ?',       field:'Q', hint:'疼痛性質', ch:'痛的感覺？像針刺還是火燒？'},
+      {text:'คุณแพ้ยาหรืออาหารอะไรบ้างไหม?',                 field:'A', hint:'過敏史',   ch:'您對什麼藥物或食物過敏嗎？'},
+      {text:'ตอนนี้คุณกินยาอะไรอยู่บ้างไหม?',                field:'M', hint:'目前用藥', ch:'您目前有定期服用藥物嗎？'},
+      {text:'คุณมีประวัติโรคประจำตัวไหม?',                    field:'P', hint:'過往病史', ch:'您有過去疾病病史嗎？'},
+      {text:'คุณกินอาหารหรือดื่มน้ำครั้งสุดท้ายเมื่อไหร่?', field:'L', hint:'最後進食', ch:'最後一次吃東西或喝水是何時？'},
+      {text:'เกิดอะไรขึ้นกับคุณ?',                            field:'E', hint:'事發經過', ch:'發生了什麼事？'},
     ]
   },
   'fil-PH': {
     name:'菲律賓語', chipId:'chip-ph',
-    greeting:'Kumusta, ako ay emergency medical technician. Pakisagot ang aking mga tanong nang maikli.',
-    retry:'Paumanhin, hindi kita narinig. Pakiulit.',
+    greeting:'Kumusta, ako ay emergency medical technician. Pakisagot ang aking mga tanong.',
+    retry:'Paumanhin, hindi narinig. Pakiulit.',
     questions:[
-      {text:'Saan ka sumasakit o hindi komportable?',             field:'S', hint:'症狀/部位', chText:'您哪裡感到疼痛或不舒服？'},
-      {text:'Gaano na katagal ang pakiramdam na ito?',            field:'O', hint:'發作時間', chText:'這個狀況已經持續多久了？'},
-      {text:'Paano ang sakit? Parang tinutusok o nagaapoy?',      field:'Q', hint:'疼痛性質', chText:'痛的感覺是怎麼樣？像針刺還是火燒？'},
-      {text:'Mayroon ka bang allergy sa gamot o pagkain?',        field:'A', hint:'過敏史', chText:'您對什麼藥物或食物過敏嗎？'},
-      {text:'Umiinom ka ba ng gamot ngayon?',                     field:'M', hint:'目前用藥', chText:'您目前有定期服用什麼藥物嗎？'},
-      {text:'Mayroon ka bang kasaysayan ng sakit dati?',          field:'P', hint:'過往病史', chText:'您過去有什麼疾病病史嗎？'},
-      {text:'Kailan ka huling kumain o uminom?',                  field:'L', hint:'最後進食', chText:'您最後一次吃東西或喝水是什麼時候？'},
-      {text:'Ano ang nangyari sa iyo?',                           field:'E', hint:'事發經過', chText:'剛剛發生了什麼事？（事發經過）'},
+      {text:'Saan ka sumasakit o hindi komportable?',             field:'S', hint:'症狀/部位', ch:'您哪裡感到疼痛或不舒服？'},
+      {text:'Gaano na katagal ang pakiramdam na ito?',            field:'O', hint:'發作時間', ch:'這個狀況已持續多久？'},
+      {text:'Paano ang sakit? Parang tinutusok o nagaapoy?',      field:'Q', hint:'疼痛性質', ch:'痛的感覺？像針刺還是火燒？'},
+      {text:'Mayroon ka bang allergy sa gamot o pagkain?',        field:'A', hint:'過敏史',   ch:'您對什麼藥物或食物過敏嗎？'},
+      {text:'Umiinom ka ba ng gamot ngayon?',                     field:'M', hint:'目前用藥', ch:'您目前有定期服用藥物嗎？'},
+      {text:'Mayroon ka bang kasaysayan ng sakit dati?',          field:'P', hint:'過往病史', ch:'您有過去疾病病史嗎？'},
+      {text:'Kailan ka huling kumain o uminom?',                  field:'L', hint:'最後進食', ch:'最後一次吃東西或喝水是何時？'},
+      {text:'Ano ang nangyari sa iyo?',                           field:'E', hint:'事發經過', ch:'發生了什麼事？'},
     ]
   }
 };
 
+// ═══════════════════════════════════════════════════════
+// State
+// ═══════════════════════════════════════════════════════
 let selectedLang = null;
 let answers = {};
 let transcriptLog = [];
 let activeRec = null;
-let userClickedLangResolver = null;
-let manualControlResolver = null;
+let manualResolver = null;    // 手動跳過/重試
+let langClickResolver = null; // 語言點選
+let stopLangVoice = false;    // 中斷語言語音偵測旗標
+let loadedVoices = [];
+let hasPatientVoice = false;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+// ═══════════════════════════════════════════════════════
+// 修正 1：預載語音並檢查可用性
+// ═══════════════════════════════════════════════════════
+function loadVoices() {
+  return new Promise(resolve => {
+    const check = () => {
+      loadedVoices = window.speechSynthesis.getVoices();
+      if (loadedVoices.length > 0) { resolve(); return; }
+      setTimeout(check, 200);
+    };
+    window.speechSynthesis.onvoiceschanged = () => {
+      loadedVoices = window.speechSynthesis.getVoices();
+      resolve();
+    };
+    check();
+    // 最多等 2 秒
+    setTimeout(resolve, 2000);
+  });
+}
+
+function findVoice(lang) {
+  const prefix = lang.split('-')[0];
+  return loadedVoices.find(v => v.lang === lang) ||
+         loadedVoices.find(v => v.lang.startsWith(prefix)) ||
+         null;
+}
+
+// ═══════════════════════════════════════════════════════
+// 修正 2：TTS — 有聲才播，否則直接 resolve
+// ═══════════════════════════════════════════════════════
 function speakAsync(text, lang) {
   return new Promise(resolve => {
     if (!window.speechSynthesis) { resolve(); return; }
     window.speechSynthesis.cancel();
+
+    const voice = findVoice(lang);
+    if (!voice) {
+      // 此裝置沒有該語言語音包 → 跳過，畫面顯示即可
+      resolve();
+      return;
+    }
+
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = lang; u.rate = 0.92;
+    u.voice = voice;
+    u.lang  = voice.lang;
+    u.rate  = 0.88;
     u.onend = resolve;
-    u.onerror = resolve;
+    u.onerror = () => resolve();
     window.speechSynthesis.speak(u);
   });
 }
 
-function listenOnce(lang) {
+// ═══════════════════════════════════════════════════════
+// 修正 3：STT — 確保 TTS 完全停止後再啟動麥克風
+// ═══════════════════════════════════════════════════════
+function stopCurrentRec() {
+  if (!activeRec) return Promise.resolve();
+  return new Promise(resolve => {
+    const r = activeRec;
+    activeRec = null;
+    r.onresult = null;
+    r.onerror  = null;
+    r.onend    = resolve;
+    try { r.stop(); } catch(e) { resolve(); }
+    setTimeout(resolve, 400); // 最多等 400ms
+  });
+}
+
+async function listenOnce(lang) {
+  // 確保 TTS 已停止
+  window.speechSynthesis.cancel();
+  // 確保上一個 recognition 實例已釋放
+  await stopCurrentRec();
+  // 硬體切換緩衝：防止 TTS→STT 死鎖
+  await sleep(450);
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) throw new Error('NO_SUPPORT');
+
   return new Promise((resolve, reject) => {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { reject('NO_SUPPORT'); return; }
-    
-    // ✨ 關鍵優化 1：不要直接強力中斷之前的實體，改用平滑控管，防止硬體層級死鎖
-    if (activeRec) { 
-      try { 
-        activeRec.onresult = null;
-        activeRec.onerror = null;
-        activeRec.onend = null;
-        activeRec.stop(); 
-      } catch(e){} 
-    }
-    
     const rec = new SR();
     activeRec = rec;
     rec.lang = lang;
     rec.interimResults = false;
     rec.maxAlternatives = 1;
-    
+
     rec.onresult = e => {
-      if (e.results && e.results[0] && e.results[0][0]) {
-        resolve({ text: e.results[0][0].transcript, confidence: e.results[0][0].confidence });
-      } else {
-        resolve({ text: '', confidence: 0 });
-      }
+      if (activeRec === rec) activeRec = null;
+      const r = e.results[0]?.[0];
+      resolve({ text: r?.transcript || '', confidence: r?.confidence ?? 0.5 });
     };
-    
-    rec.onerror = e => { 
-      reject(e.error); 
+    rec.onerror = e => {
+      if (activeRec === rec) activeRec = null;
+      reject(e.error);
     };
-    
-    rec.onend = () => { 
-      // 讓實體安全釋放
-      if (activeRec === rec) activeRec = null; 
+    rec.onend = () => {
+      if (activeRec === rec) activeRec = null;
     };
-    
-    try {
-      rec.start();
-    } catch(err) {
-      reject(err);
-    }
+    try { rec.start(); } catch(e) { activeRec = null; reject('start-failed'); }
   });
 }
 
+// ═══════════════════════════════════════════════════════
+// 翻譯 API
+// ═══════════════════════════════════════════════════════
 async function translateAndExtract(rawText, hint, lang) {
   try {
     const langName = LANG_DATA[lang].name;
-    const sys = `你是急救現場醫療翻譯助手，協助 EMT 理解外籍患者口述。將患者的${langName}回答翻譯為繁體中文，並提取「${hint}」的核心臨床資訊。只回傳 JSON，格式：{"translation":"完整口語翻譯","extracted":"核心臨床資訊1-2句"} 不要加 markdown 或其他文字。`;
+    const sys = `你是急救現場醫療翻譯助手。將患者的${langName}回答翻譯為繁體中文，並提取「${hint}」的核心臨床資訊。只回傳 JSON 不加 markdown：{"translation":"完整口語翻譯","extracted":"核心臨床資訊1-2句"}`;
     const res = await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
+      body: JSON.stringify({
         model:'claude-sonnet-4-6', max_tokens:1000, system:sys,
         messages:[{role:'user',content:`患者說（${langName}）：${rawText}`}]
       })
     });
     const data = await res.json();
-    const block = data.content.find(b=>b.type==='text');
-    let raw = (block ? block.text : '{}').replace(/```json|```/g,'').trim();
+    const block = data.content.find(b => b.type === 'text');
+    let raw = (block?.text || '{}').replace(/```json|```/g,'').trim();
     return JSON.parse(raw);
   } catch(e) {
-    return { translation: "（模擬中文翻譯對照）" + rawText, extracted: "擷取資訊：" + rawText };
+    return { translation: rawText, extracted: rawText };
   }
 }
 
+// ═══════════════════════════════════════════════════════
+// UI helpers
+// ═══════════════════════════════════════════════════════
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-const BADGE_STYLES = {
-  standby:'standby', lang:'lang', speaking:'speaking', listening:'listening', translating:'translating', done:'done'
+const BADGE = {
+  standby:['standby','待機中'], lang:['lang','選擇語言'],
+  speaking:['speaking','播放問題'], listening:['listening','聆聽患者'],
+  translating:['translating','AI 翻譯中'], done:['done','問診完成']
 };
-const BADGE_LABELS = {
-  standby:'待機中', lang:'選擇語言', speaking:'播放問題', listening:'聆聽患者', translating:'AI 翻譯中', done:'問診完成'
-};
-
-function setStateBadge(s) {
-  const el = document.getElementById('stateBadge');
-  el.className = 'state-badge ' + (BADGE_STYLES[s]||'standby');
-  document.getElementById('stateText').textContent = BADGE_LABELS[s]||s;
+function setBadge(s) {
+  const [cls, label] = BADGE[s] || ['standby', s];
+  document.getElementById('stateBadge').className = 'state-badge ' + cls;
+  document.getElementById('stateText').textContent = label;
 }
 
 function updateTable(field, text) {
-  const row = document.getElementById('row-'+field);
+  const row = document.getElementById('row-' + field);
   if (row) { row.cells[1].textContent = text; row.cells[1].className = 'cell-filled'; }
-  answers[field] = text; 
+  answers[field] = text;
 }
-
-function setListenIndicator(show) {
-  document.getElementById('listenIndicator').style.display = show ? 'flex' : 'none';
+function setConf(c) {
+  const p = Math.round(c * 100);
+  document.getElementById('confFill').style.width = p + '%';
+  document.getElementById('confFill').style.background = p >= 55 ? 'var(--teal)' : 'var(--amber)';
+  document.getElementById('confVal').textContent = p + '%';
 }
-
-function setConf(confidence) {
-  const pct = Math.round(confidence * 100);
-  document.getElementById('confFill').style.width = pct + '%';
-  document.getElementById('confFill').style.background = pct >= 55 ? 'var(--teal)' : 'var(--amber)';
-  document.getElementById('confVal').textContent = pct + '%';
+function setListen(show) {
+  const el = document.getElementById('listenIndicator');
+  el.className = 'listen-indicator' + (show ? ' show' : '');
 }
-
-function triggerManualRetry() { if(manualControlResolver) manualControlResolver({action:'retry'}); }
-function triggerManualSkip() { if(manualControlResolver) manualControlResolver({action:'skip'}); }
-
-async function listenPatient(lang, retries=0) {
-  setListenIndicator(true);
-  setStateBadge('listening');
-  
-  let speechPromise = listenOnce(lang).catch(err => { return { error: err }; });
-  let manualPromise = new Promise(resolve => { manualControlResolver = resolve; });
-  
-  let result = await Promise.race([speechPromise, manualPromise]);
-  setListenIndicator(false);
-  
-  if (result && result.action === 'skip') return 'SKIP_SIGNAL';
-  if (result && result.action === 'retry') return listenPatient(lang, 0);
-  
-  if (result.error) {
-    // ✨ 關鍵優化 2：如果遇到無聲或網路微小斷訊，自動增加內部重試，不立刻跳出
-    if ((result.error === 'no-speech' || result.error === 'network' || result.error === 'aborted') && retries < 3) {
-      await sleep(200); 
-      return listenPatient(lang, retries + 1);
-    }
-    document.getElementById('patientRaw').textContent = '未偵測到明顯聲音。請點選「重新收音」或「跳過此題」。';
-    let fallbackAction = await new Promise(resolve => { manualControlResolver = resolve; });
-    if (fallbackAction.action === 'retry') return listenPatient(lang, 0);
-    return 'SKIP_SIGNAL';
-  }
-
-  setConf(result.confidence || 0.8);
-  return result.text || '';
+function highlightChip(lang) {
+  document.querySelectorAll('.lang-chip').forEach(c => c.classList.remove('active'));
+  if (lang) document.getElementById(LANG_DATA[lang]?.chipId)?.classList.add('active');
 }
-
+function manualAction(action) {
+  if (manualResolver) { manualResolver({action}); manualResolver = null; }
+}
 function detectLang(text) {
-  const t = text.toLowerCase();
-  if (/印尼|indonesia|indon/.test(t)) return 'id-ID';
-  if (/越南|viet|viêt/.test(t)) return 'vi-VN';
-  if (/泰|thai|thailand/.test(t)) return 'th-TH';
-  if (/菲律賓|菲|tagalog|filipino|pilipino/.test(t)) return 'fil-PH';
+  const t = (text||'').toLowerCase();
+  if (/印尼|indonesia/.test(t)) return 'id-ID';
+  if (/越南|viet/.test(t))      return 'vi-VN';
+  if (/泰|thai/.test(t))        return 'th-TH';
+  if (/菲律賓|菲|tagalog|filipino/.test(t)) return 'fil-PH';
   return null;
 }
 
-function highlightChip(lang) {
-  document.querySelectorAll('.lang-chip').forEach(c => c.classList.remove('active'));
-  if (lang) {
-    const chipId = LANG_DATA[lang]?.chipId;
-    if (chipId) document.getElementById(chipId)?.classList.add('active');
+// ═══════════════════════════════════════════════════════
+// 患者聆聽（含手動控制 Promise.race）
+// ═══════════════════════════════════════════════════════
+async function listenPatient(lang, retries = 0) {
+  setListen(true);
+  setBadge('listening');
+
+  const speechP = listenOnce(lang).catch(err => ({ error: err }));
+  const manualP = new Promise(r => { manualResolver = r; });
+
+  const result = await Promise.race([speechP, manualP]);
+  manualResolver = null;
+  setListen(false);
+
+  if (result?.action === 'skip')  return 'SKIP';
+  if (result?.action === 'retry') return listenPatient(lang, 0);
+
+  if (result?.error) {
+    const err = result.error;
+    // no-speech / network / aborted → 自動重試最多 3 次
+    if ((err === 'no-speech' || err === 'network' || err === 'aborted') && retries < 3) {
+      await sleep(200);
+      return listenPatient(lang, retries + 1);
+    }
+    // 超過重試次數 → 等人工操作
+    document.getElementById('patientRaw').textContent = '⚠ 未偵測到聲音，請靠近患者後點「重新收音」';
+    document.getElementById('qaStatus').textContent = '等待操作…';
+    const fallback = await new Promise(r => { manualResolver = r; });
+    manualResolver = null;
+    if (fallback?.action === 'retry') return listenPatient(lang, 0);
+    return 'SKIP';
   }
+
+  setConf(result.confidence ?? 0.5);
+  return result.text || '';
 }
 
-function startSystemHand() {
-  if (document.getElementById('screenStandby').classList.contains('active')) {
-    runSession();
-  }
-}
-
-function selectLanguageHand(langKey) {
+// ═══════════════════════════════════════════════════════
+// 點選語言（中斷背景語音偵測）
+// ═══════════════════════════════════════════════════════
+function selectLangClick(langKey) {
+  stopLangVoice = true;
+  window.speechSynthesis.cancel();
+  // 中止目前 recognition（如果在跑）
+  if (activeRec) { try { activeRec.stop(); } catch(e){} activeRec = null; }
   highlightChip(langKey);
-  if (userClickedLangResolver) {
-    userClickedLangResolver(langKey);
-  }
+  if (langClickResolver) { langClickResolver(langKey); langClickResolver = null; }
 }
 
+let sessionStarted = false;
+function handleStartClick() {
+  if (!sessionStarted) { sessionStarted = true; runSession(); }
+}
+
+// ═══════════════════════════════════════════════════════
+// 主流程
+// ═══════════════════════════════════════════════════════
 async function runSession() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) {
     document.getElementById('errorBox').style.display = 'block';
-    document.getElementById('errorBox').textContent = '⚠ 此瀏覽器不支援語音辨識。請改用 Chrome 瀏覽器開啟此頁面。';
+    document.getElementById('errorBox').textContent = '⚠ 請使用 Chrome 瀏覽器開啟此頁面以啟用語音功能。';
     return;
   }
 
   try {
-    // ── STANDBY ───────────────────────────
-    setStateBadge('standby');
+    // 預載語音
+    await loadVoices();
+
+    // ── STANDBY ─────────────────────────────────────────
+    setBadge('standby');
     showScreen('screenStandby');
-    document.getElementById('standbyRing').classList.remove('listening-pulse');
-    await sleep(400);
     document.getElementById('standbyRing').classList.add('listening-pulse');
-    
-    await Promise.race([listenOnce('zh-TW'), new Promise(r => {})]).catch(()=>{});
+    document.getElementById('standbyHint').textContent = '正在聆聽，說任何話啟動…';
+
+    // 等待任何聲音（或點擊麥克風已提前 resolve）
+    await listenOnce('zh-TW').catch(() => {});
     document.getElementById('standbyRing').classList.remove('listening-pulse');
 
     // ── LANG SELECT ──────────────────────────────────────
     showScreen('screenLang');
-    setStateBadge('lang');
-    document.getElementById('langStatus').textContent = '系統引導中，可隨時點選畫面的語言…';
-    
-    speakAsync('請問患者說什麼語言？印尼語、越南語、泰語、還是菲律賓語？', 'zh-TW');
+    setBadge('lang');
+    stopLangVoice = false;
 
-    let lang = null;
-    let clickPromise = new Promise(resolve => { userClickedLangResolver = resolve; });
-    let voicePromise = (async () => {
-      let langAttempts = 0;
-      while (langAttempts < 2) {
-        setStateBadge('listening');
-        let result = await listenOnce('zh-TW').catch(() => { return {text:''}; });
-        let detected = detectLang(result.text || '');
-        if (detected) return detected;
-        langAttempts++;
+    // 語音問語言
+    await speakAsync('請問患者說什麼語言？印尼語、越南語、泰語、還是菲律賓語？', 'zh-TW');
+
+    // 兩種途徑競速：語音辨識 or 點選
+    const clickP  = new Promise(r => { langClickResolver = r; });
+    const voiceP  = (async () => {
+      for (let i = 0; i < 3 && !stopLangVoice; i++) {
+        setBadge('listening');
+        document.getElementById('langStatus').textContent = '請說語言名稱，或點選下方按鈕…';
+        try {
+          const r = await listenOnce('zh-TW');
+          const detected = detectLang(r.text);
+          if (detected) return detected;
+        } catch(e) { /* 繼續 */ }
       }
       return null;
     })();
 
-    lang = await Promise.race([clickPromise, voicePromise]);
-    if (!lang) lang = 'id-ID';
+    let lang = await Promise.race([clickP, voiceP]);
+    stopLangVoice = true;
+    langClickResolver = null;
 
-    window.speechSynthesis.cancel();
-    highlightChip(lang);
+    if (!lang) lang = 'id-ID'; // fallback
     selectedLang = lang;
     const ld = LANG_DATA[lang];
-    document.getElementById('langStatus').textContent = `已確認選擇：${ld.name}`;
-    
-    setStateBadge('speaking');
+
+    highlightChip(lang);
+    document.getElementById('langStatus').textContent = `已選擇：${ld.name}`;
+    setBadge('speaking');
+
+    // 確認語言（中文）
     await speakAsync(`已選擇${ld.name}，開始問診。`, 'zh-TW');
-    await speakAsync(ld.greeting, lang);
+
+    // 修正 3：偵測患者語音包是否存在
+    hasPatientVoice = !!findVoice(lang);
+
+    if (!hasPatientVoice) {
+      // 沒有語音包 → 顯示警告，問題改大字顯示給患者看
+      document.getElementById('voiceWarn').classList.add('show');
+      await speakAsync('此裝置未安裝患者語言語音，問題將以大字顯示給患者閱讀，中文翻譯仍會語音播報。', 'zh-TW');
+    } else {
+      // 有語音包 → 播放開場白
+      await speakAsync(ld.greeting, lang);
+    }
+
     await sleep(400);
 
     // ── Q&A LOOP ─────────────────────────────────────────
@@ -570,136 +621,119 @@ async function runSession() {
     for (let i = 0; i < total; i++) {
       const q = ld.questions[i];
 
-      // ✨ 關鍵優化 3：先將語音清空，等發音完畢才更新包含英文字母的 UI，防止瀏覽器語音在庫切換時產生逐字單字音
-      document.getElementById('progBar').style.width = `${(i/total)*100}%`;
+      // 更新 UI
+      document.getElementById('progBar').style.width = `${(i / total) * 100}%`;
       document.getElementById('progLabel').textContent = `問題 ${i+1} / ${total}`;
-      
-      // 中文與外語題目先渲染，但完全移除單獨浮動的英文字母
-      document.getElementById('qChinese').textContent = q.chText; 
-      document.getElementById('qForeign').textContent = q.text;
-      document.getElementById('qHint').textContent = `問診分類項目: ${q.hint}`;
-      
-      // 這裡延後渲染英文字母
       document.getElementById('qStep').textContent = `問題 ${i+1}`;
-      
-      document.getElementById('patientRaw').textContent = '準備播放問題…';
+      document.getElementById('qChinese').textContent  = q.ch;   // EMT 看中文
+      document.getElementById('qForeign').textContent  = q.text; // 外語對照
+      document.getElementById('qHint').textContent     = q.hint;
+      document.getElementById('patientRaw').textContent    = '準備播放問題…';
       document.getElementById('translationBox').textContent = '—';
       document.getElementById('confFill').style.width = '0%';
       document.getElementById('confVal').textContent = '—';
       document.getElementById('qaStatus').textContent = '播放問題中…';
 
-      // 🔊 播音：只播出該國語言（外語）的問題句子
-      setStateBadge('speaking');
-      await speakAsync(q.text, lang);
+      setBadge('speaking');
 
-      // ✨ 關鍵優化 4：在語音播放完畢與麥克風硬體啟動之間，強制留白 350ms，防止硬體切換死鎖導致無法收音
-      await sleep(350);
+      if (hasPatientVoice) {
+        // 有語音包 → 直接以患者語言語音播出問題句子
+        document.getElementById('patientDisplay').classList.remove('show');
+        await speakAsync(q.text, lang);
+      } else {
+        // 沒有語音包 → 大字顯示 + 中文提示 EMT 轉螢幕
+        document.getElementById('patientDisplay').textContent = q.text;
+        document.getElementById('patientDisplay').classList.add('show');
+        await speakAsync('請將螢幕轉向患者閱讀問題', 'zh-TW');
+        await sleep(4000); // 給患者時間看畫面
+        document.getElementById('patientDisplay').classList.remove('show');
+      }
 
-      document.getElementById('qaStatus').textContent = '等待患者回答，系統收音中…';
-      document.getElementById('patientRaw').textContent = '請說話...';
-      
+      // 麥克風啟動（listenOnce 內部已有 450ms 緩衝）
+      document.getElementById('patientRaw').textContent = '請患者說話…';
+      document.getElementById('qaStatus').textContent = '系統自動收音中…';
+
       const patientText = await listenPatient(lang);
 
-      if (!patientText || patientText === 'SKIP_SIGNAL') {
-        document.getElementById('patientRaw').textContent = '（已跳過此題）';
-        transcriptLog.push({q:q.text, chQ:q.chText, hint:q.hint, raw:'（跳過）', translation:'（跳過）', extracted:'—'});
+      if (!patientText || patientText === 'SKIP') {
+        document.getElementById('patientRaw').textContent = '（已跳過）';
+        transcriptLog.push({q:q.text, ch:q.ch, hint:q.hint, raw:'（跳過）', translation:'（跳過）', extracted:'—'});
         updateTable(q.field, '—');
-        await sleep(600);
+        await sleep(500);
         continue;
       }
 
       document.getElementById('patientRaw').textContent = patientText;
-      setStateBadge('translating');
-      document.getElementById('qaStatus').textContent = 'AI 處理中…';
+      setBadge('translating');
+      document.getElementById('qaStatus').textContent = 'AI 翻譯中…';
       document.getElementById('translationBox').textContent = '翻譯中…';
 
-      let result = await translateAndExtract(patientText, q.hint, lang);
+      const result = await translateAndExtract(patientText, q.hint, lang);
+      const extracted = result.extracted || result.translation;
 
-      document.getElementById('translationBox').textContent = result.translation || patientText;
-      document.getElementById('qaStatus').textContent = '翻譯完成，播放語音給 EMT';
-      
-      let finalExtraction = result.extracted || result.translation;
-      updateTable(q.field, finalExtraction);
-      
-      transcriptLog.push({ 
-        q:q.text, chQ:q.chText, hint:q.hint, raw:patientText, 
-        translation:result.translation, extracted: finalExtraction
-      });
+      document.getElementById('translationBox').textContent = result.translation;
+      document.getElementById('qaStatus').textContent = '翻譯完成，語音播報給 EMT';
+      updateTable(q.field, extracted);
+      transcriptLog.push({q:q.text, ch:q.ch, hint:q.hint, raw:patientText, translation:result.translation, extracted});
 
-      setStateBadge('speaking');
+      // 中文語音播給 EMT
+      setBadge('speaking');
       await speakAsync(result.translation, 'zh-TW');
 
-      document.getElementById('qaStatus').textContent = i+1 < total ? '準備進入下一題…' : '問診結束，整理報告中…';
-      // 題與題之間平滑過渡
-      await sleep(800);
+      document.getElementById('qaStatus').textContent = i+1 < total ? '進入下一題…' : '整理最終報告…';
+      await sleep(700);
     }
 
     // ── DONE ─────────────────────────────────────────────
     document.getElementById('progBar').style.width = '100%';
-    setStateBadge('done');
-    showDone();
+    setBadge('done');
+    buildDone();
     await speakAsync('問診完成，已產出完整評估表單。', 'zh-TW');
 
   } catch(err) {
     console.error(err);
-    document.getElementById('standbyHint').textContent = '發生異常：' + err;
+    document.getElementById('standbyHint').textContent = '發生異常，請重新整理頁面：' + err;
     showScreen('screenStandby');
+    sessionStarted = false;
   }
 }
 
-function showDone() {
+// ═══════════════════════════════════════════════════════
+// 完成頁面
+// ═══════════════════════════════════════════════════════
+function buildDone() {
   showScreen('screenDone');
-  const fields = [
-    ['S','症狀'],['O','發作'],['Q','性質'],['A','過敏'],
-    ['M','用藥'],['P','病史'],['L','進食'],['E','事發']
-  ];
-  
+  const fields = [['S','症狀'],['O','發作'],['Q','性質'],['A','過敏'],['M','用藥'],['P','病史'],['L','進食'],['E','事發']];
   document.getElementById('finalTable').innerHTML = fields.map(([f,l]) => {
-    const val = answers[f] || '—';
-    return `<tr><td>${f} ${l}</td><td${val!=='—'?' class="cell-filled"':''}>${val==='—'?'<span class="cell-empty">未填入</span>':val}</td></tr>`;
+    const v = answers[f] || '—';
+    return `<tr><td>${f} ${l}</td><td${v!=='—'?' class="cell-filled"':''}>${v==='—'?'<span class="cell-empty">未填入</span>':v}</td></tr>`;
   }).join('');
-
   document.getElementById('fullTranscript').innerHTML = transcriptLog.map((t,i) => `
     <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #ece8dc;">
       <div style="font-size:10px;color:var(--amber);font-weight:700;text-transform:uppercase;margin-bottom:3px;">問 ${i+1} · ${t.hint}</div>
-      <div style="color:var(--teal-deep);font-size:13px;font-weight:700;margin-bottom:2px;">中文對照：${t.chQ}</div>
-      <div style="color:#6b6458;font-size:11px;margin-bottom:4px;font-style:italic;">原文：${t.q}</div>
-      <div style="font-size:12px;color:#8a8275;margin-bottom:3px;">患者答：${t.raw}</div>
-      <div style="font-weight:600;font-size:13px;color:var(--ink);">中文翻譯：${t.translation}</div>
+      <div style="color:var(--teal-deep);font-size:13px;font-weight:700;margin-bottom:2px;">${t.ch}</div>
+      <div style="font-size:12px;color:#8a8275;margin-bottom:3px;">患者：${t.raw}</div>
+      <div style="font-weight:600;font-size:13px;">翻譯：${t.translation}</div>
     </div>
   `).join('');
 }
 
-function speakFinalReport() {
-  const fields = [
-    ['S','症狀'],['O','發作時間'],['Q','疼痛性質'],['A','過敏史'],
-    ['M','目前用藥'],['P','過往病史'],['L','最後進食'],['E','事發經過']
-  ];
-  
-  let reportText = "救護問診結果摘要報告如下。";
-  let hasData = false;
-
-  fields.forEach(([f, l]) => {
-    const val = answers[f];
-    if (val && val !== '—' && val !== '（跳過）' && val !== '未填入') {
-      reportText += `患者的${l}為：${val}。`;
-      hasData = true;
-    }
+function speakReport() {
+  const fields = [['S','症狀'],['O','發作時間'],['Q','疼痛性質'],['A','過敏史'],['M','目前用藥'],['P','病史'],['L','最後進食'],['E','事發經過']];
+  let text = '救護問診結果摘要如下。';
+  fields.forEach(([f,l]) => {
+    const v = answers[f];
+    if (v && v !== '—' && v !== '（跳過）') text += `${l}：${v}。`;
   });
-
-  if (!hasData) {
-    reportText = "報告完畢，目前沒有填入任何有效的問診資訊。";
-  } else {
-    reportText += "報告完畢。";
-  }
-
-  speakAsync(reportText, 'zh-TW');
+  speakAsync(text + '報告完畢。', 'zh-TW');
 }
 
+// 頁面載入後直接開始監聽（不等點擊）
 window.addEventListener('load', () => {
-  document.getElementById('screenStandby').addEventListener('click', () => {
-    startSystemHand();
-  }, {once: true});
+  // 需要使用者手勢解鎖 AudioContext，所以先等點擊
+  document.body.addEventListener('click', () => {
+    if (!sessionStarted) { sessionStarted = true; runSession(); }
+  }, { once: true });
 });
 </script>
 </body>
