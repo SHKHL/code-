@@ -110,7 +110,12 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
 .done-panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;}
 .action-btns{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;}
 .primary-btn{display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:#fff;border:none;padding:12px 22px;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;flex:1;justify-content:center;}
-.secondary-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--ink);border:1px solid var(--line);padding:12px 22px;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;}
+.secondary-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--ink);border:1px solid var(--line);padding:12px 22px;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;}.demo-nav-btn{display:inline-flex;align-items:center;gap:6px;background:#f7f7f7;color:#6f6f6f;border:1px solid #d8d2c2;padding:8px 12px;font-size:12px;font-weight:600;border-radius:8px;cursor:pointer;opacity:.7;transition:opacity .2s,background .2s;}
+.demo-nav-btn:hover{opacity:1;background:#f2f2f2;}.support-panel{margin-top:18px;padding:16px;background:#f9f7f2;border:1px solid var(--line);border-radius:12px;}
+.support-panel .table-title{margin-bottom:14px;}
+.support-actions{display:grid;grid-template-columns:1fr;gap:10px;}
+.support-btn{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;}
+.support-btn:hover{background:#e8f4f2;border-color:var(--teal);}
 .error-box{background:#fce4ec;border:1px solid #f48fb1;border-radius:10px;padding:18px;color:var(--red);font-size:14px;margin-top:16px;}
 .disclaimer{margin-top:28px;font-size:12px;color:#9a9384;border-top:1px solid var(--line);padding-top:12px;}
 </style>
@@ -221,6 +226,17 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
         </table>
       </div>
     </div>
+
+    <div class="support-panel" id="supportPanel" style="margin-top:12px;">
+      <div class="table-title">心理支持</div>
+      <div class="support-actions">
+        <button class="support-btn" onclick="playSupportMessage(0)">我們會協助您</button>
+        <button class="support-btn" onclick="playSupportMessage(1)">不用擔心</button>
+        <button class="support-btn" onclick="playSupportMessage(2)">深呼吸</button>
+      </div>
+    </div>
+  </div>
+    </div>
   </div>
 
   <!-- DONE -->
@@ -237,14 +253,51 @@ td:first-child{font-weight:700;color:var(--teal-deep);width:68px;white-space:now
       </div>
     </div>
     <div class="action-btns">
-      <button class="primary-btn" onclick="speakReport()">🔊 語音朗讀結論摘要</button>
-      <button class="secondary-btn" onclick="location.reload()">↺ 重新開始</button>
+      <button class="primary-btn" onclick="speakReport()">🔊 語音朗讀</button>
+      <button class="secondary-btn" onclick="showQRCode()">📱 顯示 QR Code</button>
+      <button class="secondary-btn" onclick="goToLegalTranslation()">➡ 前往法律支持</button>
+    </div>
+    <div id="qrcodePanel" style="display:none;margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;">
+        <div style="font-size:14px;font-weight:700;color:var(--teal-deep);">掃描 QR Code 取得完整結果</div>
+        <button class="secondary-btn" onclick="hideQRCode()">✕ 關閉</button>
+      </div>
+      <canvas id="qrcodeCanvas" width="260" height="260" style="width:100%;max-width:260px;margin:0 auto;display:block;border:1px solid #d8d2c2;border-radius:12px;"></canvas>
+      <div style="font-size:12px;color:#8a8275;margin-top:10px;">若掃描失敗，請複製下方內容並貼上至文字檢視工具。</div>
+      <textarea id="qrcodeData" readonly style="width:100%;min-height:100px;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:12px;white-space:pre-wrap;overflow-wrap:break-word;"></textarea>
     </div>
   </div>
-
+  <div id="screenLegal" class="screen">
+    <div class="done-banner"><h2>法律翻譯</h2><p>請確認以下已翻譯成患者語言的法律說明與文件內容。</p></div>
+    <div class="done-grid">
+      <div class="done-panel">
+        <div class="table-title" id="legalTitle">法律內容</div>
+        <div id="legalText" style="font-size:14px;line-height:1.8;color:#343a40;"></div>
+      </div>
+      <div class="done-panel">
+        <div class="table-title">法律文件</div>
+        <div id="legalDocText" style="font-size:14px;line-height:1.8;color:#343a40;"></div>
+        <button class="secondary-btn" onclick="downloadLegalDocument()" style="margin-top:16px;">⬇ 下載法律文件</button>
+        <button class="secondary-btn" onclick="showQRCodeLegal()" style="margin-top:16px;margin-left:8px;">📱 顯示 QR Code</button>
+        <div id="qrcodePanelLegal" style="display:none;margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;">
+            <div style="font-size:14px;font-weight:700;color:var(--teal-deep);">掃描 QR Code 取得完整結果</div>
+            <button class="secondary-btn" onclick="hideQRCodeLegal()">✕ 關閉</button>
+          </div>
+          <canvas id="qrcodeCanvasLegal" width="260" height="260" style="width:100%;max-width:260px;margin:0 auto;display:block;border:1px solid #d8d2c2;border-radius:12px;"></canvas>
+          <div style="font-size:12px;color:#8a8275;margin-top:10px;">若掃描失敗，請複製下方內容並貼上至文字檢視工具。</div>
+          <textarea id="qrcodeDataLegal" readonly style="width:100%;min-height:100px;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:12px;white-space:pre-wrap;overflow-wrap:break-word;"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="action-btns">
+      <button class="primary-btn" onclick="location.reload()">↺ 返回首頁</button>
+    </div>
+  </div>
   <div class="disclaimer">競賽展示原型 · 語音功能需使用 Chrome 瀏覽器 · AI 翻譯結果僅供 EMT 參考，實際救護以專業判斷為準</div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════
 // 語言資料
@@ -312,6 +365,13 @@ const LANG_DATA = {
   }
 };
 
+const SUPPORT_MESSAGES = {
+  'id-ID': ['Kami akan membantu Anda.', 'Jangan khawatir.', 'Tarik napas dalam-dalam.'],
+  'vi-VN': ['Chúng tôi sẽ giúp bạn.', 'Đừng lo.', 'Hít thở sâu.'],
+  'th-TH': ['เราจะช่วยคุณ', 'ไม่ต้องกังวล', 'หายใจเข้าออกลึกๆ'],
+  'fil-PH': ['Tutulungan ka namin.', 'Huwag mag-alala.', 'Huminga ng malalim.']
+};
+
 // ═══════════════════════════════════════════════════════
 // State
 // ═══════════════════════════════════════════════════════
@@ -328,6 +388,7 @@ let loadedVoices = [];
 let hasPatientVoice = false;
 let currentQuestion = null;
 let patientHideTimer = null;
+let skipRequested = false;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -522,6 +583,12 @@ function replayQuestion() {
 }
 
 function manualAction(action) {
+  // Allow manual actions at any time. For 'skip', mark flag, cancel TTS/rec and resolve waiting promise.
+  if (action === 'skip') {
+    skipRequested = true;
+    try { window.speechSynthesis.cancel(); } catch(e){}
+    try { if (activeRec) { activeRec.abort?.(); } } catch(e){}
+  }
   if (manualResolver) { manualResolver({action}); manualResolver = null; }
 }
 function detectLang(text) {
@@ -537,6 +604,8 @@ function detectLang(text) {
 // 患者聆聽（含手動控制 Promise.race）
 // ═══════════════════════════════════════════════════════
 async function listenPatient(lang, retries = 0) {
+  // 如果使用者事先按下 skip，立即回傳 SKIP
+  if (skipRequested) { skipRequested = false; setListen(false); return 'SKIP'; }
   setListen(true);
   setBadge('listening');
 
@@ -585,6 +654,33 @@ function setSelectedChip(langKey) {
   const chip = document.getElementById(LANG_DATA[langKey]?.chipId);
   if (chip) {
     chip.classList.add('active');
+  }
+}
+
+function getSupportMessage(index) {
+  const messages = SUPPORT_MESSAGES[selectedLang] || [];
+  return messages[index] || ['我們會協助您','不用擔心','深呼吸'][index] || '';
+}
+
+function playSupportMessage(index) {
+  const message = getSupportMessage(index);
+  if (!message) return;
+  document.getElementById('qaStatus').textContent = '心理支持語句…';
+  clearTimeout(patientHideTimer);
+
+  if (hasPatientVoice && selectedLang) {
+    document.getElementById('patientDisplay').classList.remove('show');
+    speakAsync(message, selectedLang).then(() => {
+      document.getElementById('qaStatus').textContent = '心理支持語句已播完';
+    });
+  } else {
+    document.getElementById('patientDisplay').textContent = message;
+    document.getElementById('patientDisplay').classList.add('show');
+    document.getElementById('qaStatus').textContent = '請患者閱讀上方心理支持文字';
+    patientHideTimer = setTimeout(() => {
+      document.getElementById('patientDisplay').classList.remove('show');
+      document.getElementById('qaStatus').textContent = '';
+    }, 4000);
   }
 }
 
@@ -750,6 +846,16 @@ async function runSession() {
     for (let i = 0; i < total; i++) {
       const q = ld.questions[i];
 
+      // 如果使用者已按下跳過，立即標記為跳過並進入下一題
+      if (skipRequested) {
+        skipRequested = false;
+        document.getElementById('patientRaw').textContent = '（已跳過）';
+        transcriptLog.push({q:q.text, ch:q.ch, hint:q.hint, raw:'（跳過）', translation:'（跳過）', extracted:'—'});
+        updateTable(q.field, '—');
+        await sleep(200);
+        continue;
+      }
+
       // 更新 UI
       document.getElementById('progBar').style.width = `${(i / total) * 100}%`;
       document.getElementById('progLabel').textContent = `問題 ${i+1} / ${total}`;
@@ -845,6 +951,110 @@ function buildDone() {
       <div style="font-weight:600;font-size:13px;">翻譯：${t.translation}</div>
     </div>
   `).join('');
+}
+
+const LEGAL_TRANSLATIONS = {
+  'id-ID': {
+    title: 'Pernyataan Hukum',
+    content: 'Formulir ini dilindungi oleh hukum terkait privasi medis dan persetujuan pasien. Data ini akan digunakan untuk tujuan perawatan darurat dan pencatatan medis. Harap baca dengan cermat sebelum melanjutkan.',
+    document: 'Dokumen ini berisi pernyataan hukum lengkap dalam bahasa Indonesia. Dengan menandatangani atau menyetujui dokumen ini, pasien setuju bahwa informasi ini dapat digunakan oleh tim medis untuk perawatan darurat.'
+  },
+  'vi-VN': {
+    title: 'Tuyên Bố Pháp Lý',
+    content: 'Biểu mẫu này được bảo vệ bởi luật về quyền riêng tư y tế và sự đồng ý của bệnh nhân. Dữ liệu này sẽ được sử dụng cho mục đích điều trị khẩn cấp và lưu trữ y tế. Vui lòng đọc kỹ trước khi tiếp tục.',
+    document: 'Tài liệu này chứa tuyên bố pháp lý đầy đủ bằng tiếng Việt. Khi ký hoặc đồng ý, bệnh nhân chấp nhận rằng thông tin này có thể được sử dụng bởi đội ngũ y tế để điều trị khẩn cấp.'
+  },
+  'th-TH': {
+    title: 'คำชี้แจงทางกฎหมาย',
+    content: 'แบบฟอร์มนี้ได้รับการคุ้มครองตามกฎหมายเกี่ยวกับความเป็นส่วนตัวทางการแพทย์และความยินยอมของผู้ป่วย ข้อมูลนี้จะถูกใช้เพื่อการรักษาฉุกเฉินและบันทึกทางการแพทย์ โปรดอ่านอย่างละเอียดก่อนดำเนินการต่อ',
+    document: 'เอกสารนี้ประกอบด้วยคำชี้แจงทางกฎหมายฉบับเต็มในภาษาไทย เมื่อเซ็นหรือยอมรับ ผู้ป่วยยอมรับว่าข้อมูลนี้สามารถใช้โดยทีมแพทย์เพื่อการรักษาฉุกเฉิน'
+  },
+  'fil-PH': {
+    title: 'Pahayag sa Legal',
+    content: 'Ang form na ito ay pinoprotektahan ng batas tungkol sa privacy ng medikal at pahintulot ng pasyente. Ang impormasyong ito ay gagamitin para sa emergency na pangangalaga at medikal na rekord. Mangyaring basahin nang mabuti bago magpatuloy.',
+    document: 'Ang dokumentong ito ay naglalaman ng buong pahayag sa legal sa wikang Filipino. Sa paglagda o pagpayag, sinasang-ayunan ng pasyente na magamit ang impormasyong ito ng medical team para sa emergency na pangangalaga.'
+  },
+  'zh-TW': {
+    title: '法律說明',
+    content: '本表單內容受醫療隱私與病患同意規範保護。此資料將用於急救醫療處置與紀錄保存，請於繼續前詳閱。',
+    document: '本文件為完整之法律聲明文件，說明病患同意本資料用於急救醫療用途。簽署或同意後，即表示病患了解並接受相關條款。'
+  }
+};
+
+function getQRCodePayload() {
+  return JSON.stringify({
+    source: 'MEDI-BRIDGE',
+    generatedAt: new Date().toISOString(),
+    answers,
+    transcript: transcriptLog
+  }, null, 0);
+}
+
+function showQRCode() {
+  const panel = document.getElementById('qrcodePanel');
+  const canvas = document.getElementById('qrcodeCanvas');
+  const dataEl = document.getElementById('qrcodeData');
+  const payload = getQRCodePayload();
+  dataEl.value = payload;
+  panel.style.display = 'block';
+  if (window.QRious) {
+    new QRious({ element: canvas, value: payload, size: 260 });
+  } else {
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#333';
+    ctx.font = '14px sans-serif';
+    ctx.fillText('QR library 無法載入', 10, 30);
+  }
+}
+
+function hideQRCode() {
+  document.getElementById('qrcodePanel').style.display = 'none';
+}
+
+function showQRCodeLegal() {
+  const panel = document.getElementById('qrcodePanelLegal');
+  const canvas = document.getElementById('qrcodeCanvasLegal');
+  const dataEl = document.getElementById('qrcodeDataLegal');
+  const payload = getQRCodePayload();
+  dataEl.value = payload;
+  panel.style.display = 'block';
+  if (window.QRious) {
+    new QRious({ element: canvas, value: payload, size: 260 });
+  } else {
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#333';
+    ctx.font = '14px sans-serif';
+    ctx.fillText('QR library 無法載入', 10, 30);
+  }
+}
+
+function hideQRCodeLegal() {
+  document.getElementById('qrcodePanelLegal').style.display = 'none';
+}
+
+function goToLegalTranslation() {
+  const legal = LEGAL_TRANSLATIONS[selectedLang] || LEGAL_TRANSLATIONS['zh-TW'];
+  document.getElementById('legalTitle').textContent = legal.title;
+  document.getElementById('legalText').textContent = legal.content;
+  document.getElementById('legalDocText').textContent = legal.document;
+  showScreen('screenLegal');
+}
+
+function downloadLegalDocument() {
+  const legal = LEGAL_TRANSLATIONS[selectedLang] || LEGAL_TRANSLATIONS['zh-TW'];
+  const blob = new Blob([legal.document], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `legal-document-${selectedLang}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function speakReport() {
